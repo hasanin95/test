@@ -12,10 +12,13 @@
     - ansible_host_key_checking: false
     - ansible_stdout_callback: yaml
   tasks: 
-    - name: "Shell"
+    - name: "Install packages"
+      shell: npm install
+
+    - name: "Run backend"
       shell: |
-        cd backend
-        npm run start
+        pm2 stop default
+        pm2 start npm -- start
 
   environment:
     - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
