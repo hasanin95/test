@@ -18,7 +18,7 @@
 
     - name: "Run backend"
       shell: |
-        cd backend
+        cd home/ubuntu/backend/
         pm2 stop default
         pm2 start npm -- start
         pm2 list
