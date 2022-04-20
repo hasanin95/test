@@ -14,7 +14,7 @@
   tasks: 
     - name: "Shell"
       shell: |
-        echo "hello $TYPEORM_CONNECTION"
+        cd backend
         pm2 start npm -- start
 
   environment:
