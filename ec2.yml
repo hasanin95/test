@@ -14,8 +14,8 @@
   tasks: 
     - name: "Shell"
       shell: |
-        echo "hello $TYPEORM_CONNECTION"
+        echo "hello $TYPEORM_CONNECTION $TYPEORM_PORT"
 
   environment:
-    - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_PORT')}}"
+    - TYPEORM_CONNECTION: "{{ lookup('env', 'MY_VAR')}}"
     - TYPEORM_PORT: 5432
