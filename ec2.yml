@@ -15,7 +15,7 @@
     - name: "Shell"
       shell: |
         cd backend
-        pm2 start npm -- start
+        npm run start
 
   environment:
     - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
