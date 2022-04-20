@@ -12,16 +12,29 @@
     - ansible_host_key_checking: false
     - ansible_stdout_callback: yaml
   tasks: 
-    - name: "Install packages"
+    - name: Install nvm
       shell: |
-        pm2 list
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+      args:
+        executable: /bin/bash
+        chdir: "$HOME"
+        creates: "$HOME/.nvm/nvm.sh"
 
-    - name: "Run backend"
+    - name: Setup .profile
+      lineinfile:
+        path: ~/.profile
+        line: source ~/.nvm/nvm.sh
+        create: yes
+
+    - name: Install node
       shell: |
-        cd home/ubuntu/backend/
-        pm2 stop default
-        pm2 start npm -- start
-        pm2 list
+        nvm install {{item}}
+      args:
+        executable: /bin/bash
+        chdir: "$HOME"
+        creates: "$HOME/.nvm/versions/node/v{{item}}"
+      loop:
+        - 13.8.0
 
   environment:
     - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
