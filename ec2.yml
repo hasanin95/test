@@ -29,7 +29,7 @@
 
     - name: Install node
       shell: |
-        nvm install {{item}}
+        source /root/.nvm/nvm.sh && nvm install {{item}}
       args:
         executable: /bin/bash
         chdir: "$HOME"
