@@ -14,14 +14,14 @@
   tasks: 
     - name: "Install packages"
       shell: |
-        cd backend
-        npm install
+        pm2 list
 
     - name: "Run backend"
       shell: |
         cd backend
         pm2 stop default
         pm2 start npm -- start
+        pm2 list
 
   environment:
     - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
