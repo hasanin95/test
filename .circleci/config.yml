@@ -1,0 +1,27 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  configure_infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["7e:bf:e8:af:79:33:f3:c4:4d:5e:c9:49:73:e6:ce:15"]
+      - run:
+          name: "Install ansible"
+          command: apk add --update ansible
+      - run:
+          name: "run playbook"
+          command: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt ec2.yml -v
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  say-hello-workflow:
+    jobs:
+      - configure_infrastructure
