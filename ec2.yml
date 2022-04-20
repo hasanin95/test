@@ -13,10 +13,13 @@
     - ansible_stdout_callback: yaml
   tasks: 
     - name: "Install packages"
-      shell: npm install
+      shell: |
+        cd backend
+        npm install
 
     - name: "Run backend"
       shell: |
+        cd backend
         pm2 stop default
         pm2 start npm -- start
 
