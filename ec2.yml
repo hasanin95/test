@@ -6,7 +6,6 @@
   become: true
   become_method: sudo
   become_user: root
-  become_flags: -i
   gather_facts: false
   vars:
     - ansible_python_interpreter: /usr/bin/python3
@@ -36,6 +35,10 @@
         creates: "$HOME/.nvm/versions/node/v{{item}}"
       loop:
         - 13.8.0
+
+    - name: check node
+      shell: |
+        node --version
 
   environment:
     - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
